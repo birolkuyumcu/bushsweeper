@@ -1,0 +1,16 @@
+BushSweeper Game is a cross-platform clone of the MS Minesweeper 
+
+= Introduction =
+BushSweeper Game is a cross-platform clone of the MS Minesweeper.
+Goal of the game sweep bushs from your country
+
+= Details =
+
+Programming Language  : C++
+
+Used IDE              : CodeBlocks
+
+Used GUI Library      : FLTK
+
+ 
+
