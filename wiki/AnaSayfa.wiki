@@ -1,0 +1,13 @@
+Microsoft'un  Mayın tarlası programının bir benzerini yapmaya çalıştım.
+Fakat Mayın yerine *"Bush"*'ları temizliyeceksiniz
+
+Şu haliyle Program Hiç bir grafik içermiyor iskelet halinde bulunuyor.
+Ama çalışıyor ;)
+
+IDE olarak CodeBlocks [http://www.codeblocks.org/]
+
+GUI Kütüphanesi olarak : FLTK [http://www.fltk.org/]
+
+kullanılmıştır Hem Windows hem de Linux altında  derlenebilir.
+
+
