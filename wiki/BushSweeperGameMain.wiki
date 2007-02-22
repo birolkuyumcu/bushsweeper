@@ -15,4 +15,9 @@ Used IDE              : CodeBlocks
 
 Used GUI Library      : FLTK
 
+*BlueKid* 
+   MyBlog      : [http://derindelimavi.blogspot.com/]
+
+   BluePlayer  : [http://blueplayer.sourceforge.net/]
+
  
