@@ -1,0 +1,18 @@
+Microsoft'un  Mayın tarlası programının bir benzerini yapmaya çalıştım.
+Fakat Mayın yerine **"Bush"**'ları temizliyeceksiniz
+
+
+**Ekran görüntüleri**
+http://linux.softpedia.com/progScreenshots/BushSweeper-Screenshot-23364.html
+
+
+IDE olarak CodeBlocks http://www.codeblocks.org/
+
+GUI Kütüphanesi olarak : FLTK http://www.fltk.org/
+
+kullanılmıştır Hem Windows hem de Linux altında  derlenebilir.
+
+**BlueKid**
+> MyBlog      : http://derindelimavi.blogspot.com/
+
+
