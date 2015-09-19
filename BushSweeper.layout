@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_layout_file>
+	<ActiveTarget name="Release" />
+	<File name="Animated_Icon.cc" open="1" top="0" tabpos="4">
+		<Cursor position="12071" topLine="12" />
+	</File>
+	<File name="BushSwp.cxx" open="1" top="1" tabpos="1">
+		<Cursor position="400" topLine="0" />
+	</File>
+	<File name="BushSwp.fl" open="0" top="0" tabpos="5">
+		<Cursor position="4214" topLine="0" />
+	</File>
+	<File name="Cell.h" open="0" top="0" tabpos="1">
+		<Cursor position="14744" topLine="255" />
+	</File>
+	<File name="board.cpp" open="1" top="0" tabpos="3">
+		<Cursor position="11" topLine="0" />
+	</File>
+	<File name="board.h" open="1" top="0" tabpos="2">
+		<Cursor position="87" topLine="0" />
+	</File>
+</CodeBlocks_layout_file>

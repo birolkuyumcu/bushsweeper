@@ -1,0 +1,496 @@
+# data file for the Fltk User Interface Designer (fluid)
+version 1.0108 
+header_name {.h} 
+code_name {.cxx}
+comment {BushSweeper 1.0
+License : GPL
+Programmed by BlueKid
+http://derindelimavi.blogspot.com/
+Sent me any suggestion, modification or bugs. Don't hesitate to contact
+me for any question, I will be very grateful with your feedbacks.
+bluekid70@gmail.com} {in_source in_header
+} 
+
+decl {\#include <FL/fl_ask.H>} {public
+} 
+
+decl {\#include <stdio.h>} {public
+} 
+
+decl {\#include <stdlib.h>} {public
+} 
+
+decl {\#include "Cell.h"} {public
+} 
+
+decl {\#include "board.h"} {public
+} 
+
+decl {\#include "Animated_Icon.h"} {public
+} 
+
+decl {short *cells;} {public
+} 
+
+decl {Board *brd;} {public
+} 
+
+decl {char AIconPath[1024];} {public
+} 
+
+decl {char Buf1[50],Buf2[50],Buf3[50],Buf4[50];} {public
+} 
+
+decl {int x_limit, y_limit,nBush,level,iBush;} {public
+} 
+
+decl {int nCells,nSigned,MaxTime;} {public
+} 
+
+decl {bool Playing,TimeL;} {public
+} 
+
+Function {make_window()} {} {
+  Fl_Window {} {
+    label {BushSweeper 1.0 } open
+    xywh {332 97 610 660} type Double box PLASTIC_UP_BOX color 12 hide
+  } {
+    Fl_Progress KHucre {
+      tooltip Remaining xywh {5 30 445 17} box UP_BOX selection_color 1 labelfont 2 labelsize 12 when 1
+    }
+    Fl_Group Map {
+      callback Map_CB open
+      xywh {5 53 600 600} box PLASTIC_DOWN_FRAME
+      code0 {// NewGame();}
+      class GMap
+    } {}
+    Fl_Button {} {
+      callback {NewGame();}
+      tooltip {New Game} image {NewGame.png} xywh {460 5 45 45} box PLASTIC_UP_BOX shortcut 0xffbf color 0 labelfont 3 labelsize 13 labelcolor 4 align 128
+    }
+    Fl_Button {} {
+      callback {Options *dlg=new Options();
+dlg->show();}
+      tooltip Options image {Icons03-6-de.png} xywh {510 5 45 45} box PLASTIC_UP_BOX color 0 labelfont 3 labelcolor 4 align 128
+    }
+    Fl_Button {} {
+      callback {About *dlg=new About();
+dlg->show();}
+      tooltip About image {Icons04-12.png} xywh {560 5 45 45} box PLASTIC_UP_BOX shortcut 0xffbe color 0 labelfont 3 labelcolor 4 align 128
+    }
+    Fl_Progress RTime {
+      tooltip {Remaining Time} xywh {5 10 445 17} box UP_BOX color 1 selection_color 7 labelfont 2 labelsize 12 when 1
+      code0 {RTime->value(MaxTime);}
+    }
+  }
+} 
+
+Function {} {open
+} {
+  code {Fl_Window  * window;
+x_limit=30;
+y_limit=30;
+iBush=100;
+level=1;
+Playing=false;
+TimeL=true;
+MaxTime=600;
+brd=new Board(x_limit,y_limit);
+
+window = make_window( );
+
+// For Linux dont Find Gif File !
+char Buf[1024];
+strcpy(Buf,argv[0]);
+for(int i=strlen(Buf)-1;i>=0;i--){
+   if(Buf[i]=='/'|| Buf[i]== '\\\\' ){
+     Buf[i]=0;
+     break;
+   }
+}
+   
+sprintf(AIconPath,"%s/%s",Buf,"bush_dance3.gif");
+ 
+
+window->show( argc, argv );
+return ( Fl :: run( ) );} {selected
+  }
+} 
+
+Function {NewGame()} {return_type void
+} {
+  code {int iy,ix;
+int v;
+nBush=iBush+20*(level-1);
+brd->Locate(nBush);
+Map->clear();
+Map->begin(); 
+Cell *c;
+for (iy = 0; iy < y_limit; ++iy) {
+	for (ix = 0; ix < x_limit; ++ix) {
+            c=new Cell(ix*20+Map->x(),iy*20+Map->y(),brd->GetValue(ix,iy));	
+            Map->add(c);
+
+	}
+
+}
+
+Map->end();
+Map->redraw();
+// nCells=x_limit*y_limit;
+// nSigned=0;
+KHucre->maximum(brd->nCells);
+KHucre->minimum(nBush);
+KHucre->value(brd->nCells);
+Playing=true;
+Start *dlg=new Start();
+dlg->show();} {}
+} 
+
+Function {OpenCells()} {return_type void
+} {
+  code {int iy,ix;
+int x_limit, y_limit,nBush;
+int v;
+x_limit=30;
+y_limit=30;
+int max=x_limit*y_limit;
+Cell *c;
+
+
+for(int i=0;i<max;i++){
+  c=(Cell*)Map->child(i);
+  if(c->opened) continue;
+  c->LClick();
+  c->deactivate();
+
+}
+Map->redraw();} {}
+} 
+
+Function {Map_CB(GMap*, void*bt)} {return_type {static void}
+} {
+  code {int b=(int)bt;
+int x, y;
+Cell *c;
+
+ if(Playing==false) return;
+ if(b==1){
+       //left CLÝCK
+   x=Fl::event_x();
+   y=Fl::event_y();
+   x=x-Map->x();
+   x=x/20;
+   y=y-Map->y();
+   y=y/20;
+   c=(Cell*)Map->child(x+30*y);
+   if(brd->GetValue(x,y)==-2) 
+     return;
+   else{
+     brd->SetValue(x,y,-2);
+//     nCells--;
+     KHucre->value(brd->nCells);     
+   }
+   if(c->rclick==1) return;
+   
+   if(c->value==-1){       // Kaybettiniz
+     Playing=false;
+     c->color(FL_YELLOW);
+     OpenCells();
+     fl_beep(FL_BEEP_ERROR);
+//     fl_message("Kaybettiniz "); 
+     Playing=false;    
+     Loose *dlg=new Loose();
+     dlg->show(); 
+     
+   }
+   if(c->value==0) OpenVoids(x,y);  
+   if(KHucre->value()==nBush && Playing){     // Kazandýnýz
+    fl_beep(FL_BEEP_NOTIFICATION);
+    Playing=false;    
+    Win *dlg=new Win();
+    dlg->show();     
+//    fl_message("Kazandýnýz ");
+    OpenCells();    
+    level++;
+   }   
+   return;
+// ulaþýldý
+
+       
+  }
+
+  if(b==3){
+       //right
+
+  }} {}
+} 
+
+Function {OpenVoids(int x, int y)} {return_type void
+} {
+  code {Cell *c;
+int xv[8]={-1,-1,-1, 0,0, 1,1,1};
+int yv[8]={-1, 0, 1,-1,1,-1,0,1};
+
+for(int i=0;i<8;i++){
+  xv[i]=x+xv[i];
+  yv[i]=y+yv[i];
+  if(xv[i]<0 || xv[i]>=30 || yv[i]<0 || yv[i]>=30 ) continue;
+  c=(Cell*)Map->child(xv[i]+30*yv[i]);
+  if(!c->opened){
+    c->LClick();
+    if(c->value==0) OpenVoids(xv[i],yv[i]);
+    c->redraw();
+    // brd
+    brd->SetValue(xv[i],yv[i],-2);
+//    brd->nCells--;
+
+    KHucre->value(brd->nCells);  
+
+
+  }
+}} {}
+} 
+
+class Loose {open
+} {
+  Function {Loose()} {open
+  } {
+    Fl_Window window {
+      label {You Loose !} open
+      xywh {817 229 460 460} type Double box PLASTIC_UP_BOX color 12 align 0
+      code0 {o->set_modal();} visible
+    } {
+      Fl_Return_Button Ok {
+        label Ok
+        callback cb_Ok
+        xywh {315 420 130 30} box PLASTIC_UP_BOX color 15
+      }
+      Fl_Group {} {
+        xywh {315 76 135 336} box PLASTIC_DOWN_BOX color 12
+      } {
+        Fl_Box Icon1 {
+          label { }
+          xywh {325 89 115 308} box PLASTIC_UP_FRAME color 12
+          class Animated_Icon
+        }
+      }
+      Fl_Box {} {
+        image {AbuGhraib.jpg} xywh {10 76 290 374}
+      }
+      Fl_Box {} {
+        label {and Now Liberated by Bush !}
+        tooltip {Ülkeniz Bush tarafýndan Özgürleþtirildi !} xywh {10 12 445 53} box PLASTIC_UP_BOX color 15 labeltype SHADOW_LABEL labelfont 3 labelsize 17 labelcolor 1
+      }
+    }
+  }
+  Function {show()} {open
+  } {
+    code {Icon1->load_animated_gif(AIconPath,0.2,1,0);
+Icon1->set(Icon1->maxframes,1);
+Icon1->start();
+window->show();} {}
+  }
+  Function {hide()} {} {
+    code {window->hide();} {}
+  }
+} 
+
+class Start {} {
+  Function {Start()} {open
+  } {
+    Fl_Window window {
+      label {New Game} open
+      xywh {404 204 322 129} type Double box PLASTIC_UP_BOX color 12 align 0 hide
+      code0 {o->set_modal();}
+    } {
+      Fl_Return_Button Ok {
+        label Ok
+        callback {RTime->minimum(0);
+RTime->maximum(MaxTime);
+RTime->value(MaxTime);
+RTime->redraw();
+if(TimeL) Fl::add_timeout(1.0, Timer);
+SetLabel();
+hide();}
+        xywh {210 68 98 45} box PLASTIC_UP_BOX color 15
+      }
+      Fl_Box {} {
+        xywh {10 72 50 41}
+      }
+      Fl_Box Level {
+        label {Level  1}
+        tooltip Level xywh {8 12 299 48} box PLASTIC_UP_BOX color 15 labeltype SHADOW_LABEL labelfont 3 labelsize 27 labelcolor 1
+      }
+      Fl_Box nBsh {
+        label {Number of Bush  : 100}
+        tooltip {Bush Sayýsý} xywh {12 66 191 51} box PLASTIC_UP_BOX color 15 labeltype SHADOW_LABEL labelfont 3 labelsize 17 labelcolor 4
+      }
+    }
+  }
+  Function {show()} {open
+  } {
+    code {//char Buf[50]; 
+// 1. Sevye 
+// Bush Sayýs : 100
+sprintf(Buf1,"Level %d",level);
+Level->label(Buf1);
+//Level->redraw();
+sprintf(Buf2,"Number of Bushs : %d",nBush);
+nBsh->label(Buf2);
+//nBsh->redraw();
+window->show();} {}
+  }
+  Function {hide()} {} {
+    code {window->hide();} {}
+  }
+} 
+
+Function {cb_Ok(Fl_Return_Button*o, void*w)} {} {
+  code {((Fl_Window *)(o->parent()))->hide();} {}
+} 
+
+class Win {} {
+  Function {Win()} {} {
+    Fl_Window window {
+      label Win open
+      xywh {425 243 422 163} type Double box PLASTIC_UP_BOX color 12 align 0 hide
+      code0 {o->set_modal();}
+    } {
+      Fl_Return_Button Ok {
+        label Ok
+        callback cb_Ok
+        xywh {270 110 130 45} box PLASTIC_UP_BOX color 15
+      }
+      Fl_Box {} {
+        image {Win.jpg} xywh {10 10 115 145}
+      }
+      Fl_Box {} {
+        label {Congratulations All Bushs sweeped }
+        tooltip {Tebriker Bütün Buslarý Temizlediniz} xywh {130 12 285 53} box PLASTIC_UP_BOX color 15 labeltype SHADOW_LABEL labelfont 3 labelsize 17 labelcolor 1
+      }
+    }
+  }
+  Function {show()} {open
+  } {
+    code {window->show();} {}
+  }
+  Function {hide()} {} {
+    code {window->hide();} {}
+  }
+} 
+
+class About {} {
+  Function {About()} {open
+  } {
+    Fl_Window window {
+      label {Who is Bush} open
+      xywh {330 242 810 425} type Double box PLASTIC_UP_BOX color 12 align 0 hide
+      code0 {o->set_modal();}
+    } {
+      Fl_Return_Button Ok {
+        label Ok
+        callback cb_Ok
+        xywh {625 380 165 34} box PLASTIC_UP_BOX color 15
+      }
+      Fl_Box {} {
+        tooltip {Liberated ! iraqi child} image {bloody_iraqi_child.jpg} xywh {5 10 360 408}
+      }
+      Fl_Box {} {
+        label {"Village by village, city by city, country by country,  liberation is coming. The people of World have my pledge: Our fighting forces will press on until their oppressors are gone and Whole World is free."}
+        xywh {370 83 430 287} box SHADOW_FRAME color 12 labeltype SHADOW_LABEL labelfont 3 labelsize 25 labelcolor 1 align 128
+      }
+      Fl_Box {} {
+        label {George W. Bush says }
+        tooltip {Eþkiya Dünyaya Hükümdar olmaaz} xywh {370 23 430 44} box SHADOW_FRAME color 12 labelsize 25 labelcolor 4 align 128
+      }
+      Fl_Box {} {
+        label {Programmed by BlueKid}
+        tooltip {http://derindelimavi.blogspot.com/} xywh {370 380 250 34} box UP_BOX color 15
+      }
+    }
+  }
+  Function {show()} {} {
+    code {window->show();} {}
+  }
+  Function {hide()} {open
+  } {
+    code {window->hide();} {}
+  }
+} 
+
+class Options {} {
+  Function {Options()} {open
+  } {
+    Fl_Window window {
+      label Options open
+      xywh {552 172 470 140} type Double box PLASTIC_UP_BOX color 12 align 0 hide
+      code0 {o->set_modal();}
+    } {
+      Fl_Return_Button Ok {
+        label Ok
+        callback {iBush=(int)OptionnBush->value();
+MaxTime=(int)Time->value();
+//Time->value(MaxTime);
+if(TimeLimit->value()>0.0) 
+  TimeL=true;
+else
+  TimeL=false;
+hide();}
+        xywh {325 95 130 30} box PLASTIC_UP_BOX color 15
+      }
+      Fl_Value_Slider OptionnBush {
+        label {Number of Bushs :}
+        xywh {140 16 315 20} type Horizontal box PLASTIC_DOWN_BOX color 63 align 4 minimum 10 maximum 890 step 10 value 100 textsize 14
+        code0 {OptionnBush->value(iBush);}
+      }
+      Fl_Check_Button TimeLimit {
+        label {Time Limit}
+        callback {if(TimeLimit->value()>0)
+  Time->activate();
+else
+  Time->deactivate();}
+        xywh {90 55 40 25} down_box DOWN_BOX align 4
+        code0 {if(TimeL)TimeLimit->value(1);}
+      }
+      Fl_Value_Slider Time {
+        label {sec :}
+        xywh {140 55 314 20} type Horizontal box PLASTIC_DOWN_BOX color 63 align 4 minimum 60 maximum 900 step 10 value 600 textsize 14
+        code0 {Time->value(MaxTime);}
+      }
+    }
+  }
+  Function {show()} {} {
+    code {window->show();} {}
+  }
+  Function {hide()} {} {
+    code {window->hide();} {}
+  }
+} 
+
+Function {Timer(void*)} {} {
+  code {if(Playing==false) return;
+int i=(int)RTime->value();
+i--;
+SetLabel();
+RTime->value(i);
+if(i==0){
+  Playing=false;
+  OpenCells();
+  fl_beep(FL_BEEP_ERROR);
+  Loose *dlg=new Loose();
+  dlg->show(); 
+}
+
+Fl::repeat_timeout(1.0, Timer);} {}
+} 
+
+Function {SetLabel()} {} {
+  code {if(TimeL) {
+  sprintf(Buf3,"Remaining Time : %d",(int)RTime->value());
+  RTime->label(Buf3);
+}
+
+sprintf(Buf4,"Remaining Cells : %d",(int)KHucre->value()-nBush);
+KHucre->label(Buf4);} {}
+} 

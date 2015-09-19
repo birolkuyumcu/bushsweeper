@@ -1,0 +1,164 @@
+# depslib dependency file v1.0
+1171015606 source:c:\xynth\projects\bushsweeper\bushswp.cxx
+	"BushSwp.h"
+	<FL/Fl_Image.H>
+
+1171015606 c:\xynth\projects\bushsweeper\bushswp.h
+	<FL/Fl.H>
+	<FL/fl_ask.H>
+	<stdio.h>
+	<stdlib.h>
+	"Cell.h"
+	"board.h"
+	"Animated_Icon.h"
+	<FL/Fl_Double_Window.H>
+	<FL/Fl_Progress.H>
+	<FL/Fl_Button.H>
+	<FL/Fl_Box.H>
+	<FL/Fl_Return_Button.H>
+	<FL/Fl_Group.H>
+
+1112284883 c:\program files\codeblocks\include\fl\fl.h
+	"Enumerations.H"
+
+1113610397 c:\program files\codeblocks\include\fl\enumerations.h
+	"Fl_Export.H"
+
+1113610397 c:\program files\codeblocks\include\fl\fl_export.h
+
+1113417327 c:\program files\codeblocks\include\fl\fl_ask.h
+	"Enumerations.H"
+
+1105647594 c:\program files\codeblocks\include\stdio.h
+	<_mingw.h>
+	<stddef.h>
+	<stdarg.h>
+	<sys/types.h>
+
+1105647592 c:\program files\codeblocks\include\_mingw.h
+
+1105647594 c:\program files\codeblocks\include\stddef.h
+
+1105647594 c:\program files\codeblocks\include\stdarg.h
+
+1105647596 c:\program files\codeblocks\include\sys\types.h
+	<_mingw.h>
+	<stddef.h>
+
+1105647594 c:\program files\codeblocks\include\stdlib.h
+	<_mingw.h>
+	<stddef.h>
+
+1170775828 c:\xynth\projects\bushsweeper\cell.h
+	<FL/Fl_Box.H>
+	<FL/Fl_Group.H>
+	<string.h>
+	<FL/Fl_Image.H>
+
+1113610397 c:\program files\codeblocks\include\fl\fl_box.h
+	"Fl_Widget.H"
+
+1121420093 c:\program files\codeblocks\include\fl\fl_widget.h
+	"Enumerations.H"
+
+1113606797 c:\program files\codeblocks\include\fl\fl_double_window.h
+	"Fl_Window.H"
+
+1121416493 c:\program files\codeblocks\include\fl\fl_window.h
+	"Fl_Group.H"
+
+1121416493 c:\program files\codeblocks\include\fl\fl_group.h
+	"Fl_Widget.H"
+
+1113606797 c:\program files\codeblocks\include\fl\fl_counter.h
+	"Fl_Valuator.H"
+
+1113606797 c:\program files\codeblocks\include\fl\fl_valuator.h
+	"Fl_Widget.H"
+
+1113606797 c:\program files\codeblocks\include\fl\fl_scroll.h
+	"Fl_Group.H"
+	"Fl_Scrollbar.H"
+
+1113606797 c:\program files\codeblocks\include\fl\fl_scrollbar.h
+	"Fl_Slider.H"
+
+1113606797 c:\program files\codeblocks\include\fl\fl_slider.h
+	"Fl_Valuator.H"
+
+1113606797 c:\program files\codeblocks\include\fl\fl_button.h
+	"Fl_Widget.H"
+
+1170410370 source:c:\xynth\projects\bushsweeper\board.cpp
+	"board.h"
+
+1170409958 c:\xynth\projects\bushsweeper\board.h
+	<stdlib.h>
+	<time.h>
+
+1105647596 c:\program files\codeblocks\include\time.h
+	<_mingw.h>
+	<stddef.h>
+
+1113606797 c:\program files\codeblocks\include\fl\fl_output.h
+	"Fl_Input.H"
+
+1113606797 c:\program files\codeblocks\include\fl\fl_input.h
+	"Fl_Input_.H"
+
+1113606797 c:\program files\codeblocks\include\fl\fl_input_.h
+	"Fl_Widget.H"
+
+1105647594 c:\program files\codeblocks\include\string.h
+	<_mingw.h>
+	<stddef.h>
+
+1113606797 c:\program files\codeblocks\include\fl\fl_value_output.h
+	"Fl_Valuator.H"
+
+1113606797 c:\program files\codeblocks\include\fl\fl_progress.h
+	"Fl_Widget.H"
+
+1113610397 c:\program files\codeblocks\include\fl\fl_image.h
+	"Enumerations.H"
+
+1170844407 c:\xynth\projects\bushsweeper\animated_icon.h
+	<Fl/Fl_Box.H>
+	<Fl/Fl_Pixmap.H>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1113610397 c:\program files\codeblocks\include\fl\fl_pixmap.h
+	"Fl_Image.H"
+
+943889765 c:\xynth\projects\bushsweeper\gif.cxx
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
+1113606797 c:\program files\codeblocks\include\fl\fl_return_button.h
+	"Fl_Button.H"
+
+1170844408 source:c:\xynth\projects\bushsweeper\animated_icon.cc
+	<Fl/Fl.H>
+	"Animated_Icon.h"
+
+1170406770 source:c:\projects\bushsweeper\board.cpp
+	"board.h"
+
+1170406358 c:\projects\bushsweeper\board.h
+	<stdlib.h>
+	<time.h>
+
+1170840810 source:c:\projects\bushsweeper\animated_icon.cc
+	<Fl/Fl.H>
+	"Animated_Icon.h"
+
+1170840808 c:\projects\bushsweeper\animated_icon.h
+	<Fl/Fl_Box.H>
+	<Fl/Fl_Pixmap.H>
+	<stdio.h>
+	<stdlib.h>
+	<string.h>
+
